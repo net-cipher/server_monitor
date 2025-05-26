@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Monitor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Dashboard Section (System Monitor) -->
+        <div class="dashboard-section">
+            <h1 class="title">System Monitor</h1>
+            
+            <button id="logout-btn">Logout</button>
+
+            <div class="dashboard">
+                <div class="metric-card cpu-card">
+                    <div class="metric-title">
+                        <i class="fas fa-microchip"></i> CPU Usage
+                    </div>
+                    <div class="metric-value" id="cpu-value">0%</div>
+                    <div class="progress-container">
+                        <div class="progress-bar cpu-bar"></div>
+                    </div>
+                </div>
+
+                <div class="metric-card ram-card">
+                    <div class="metric-title">
+                        <i class="fas fa-memory"></i> RAM Usage
+                    </div>
+                    <div class="metric-value" id="ram-value">0%</div> 
+                    <div class="progress-container">
+                        <div class="progress-bar ram-bar"></div>
+                    </div>
+                </div>
+
+                <div class="metric-card network-card">
+                    <div class="metric-title">
+                        <i class="fas fa-network-wired"></i> Network Sent
+                    </div>
+                    <div class="metric-value" id="network-value">0 bytes</div>
+                </div>
+
+                <div class="metric-card disk-card">
+                    <div class="metric-title">
+                        <i class="fas fa-hdd"></i> Disk Usage
+                    </div>
+                    <div class="metric-value" id="disk-value">0%</div> 
+                    <div class="progress-container">
+                        <div class="progress-bar disk-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="subtitle">
+                <i class="fas fa-list-ul"></i> Running Processes
+            </h2>
+            
+            <div class="process-list">
+                <div class="process-header">
+                    <span class="process-name-header">Process Name</span>
+                    <span class="process-cpu-header">CPU</span>
+                    <span class="process-ram-header">RAM</span>
+                </div>
+                
+                <div class="processes">
+                    {% for process in data['top_apps'] %}
+                    <div class="process">
+                        <span class="process-name">{{ process.name }}</span>
+                        <span class="process-cpu">{{ process.cpu }}%</span>
+                        <span class="process-ram">{{ process.memory }}%</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}?v=1"></script>
+    <script>
+        // Logout function
+        document.getElementById("logout-btn").addEventListener("click", function () {
+            window.location.href = "/logout";  // Redirect to logout route on button click
+        });
+    </script>
+</body>
+</html>
